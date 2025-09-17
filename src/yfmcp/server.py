@@ -4,7 +4,7 @@ from typing import Annotated
 
 import yfinance as yf
 from loguru import logger
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 from pydantic import Field
 from yfinance.const import SECTOR_INDUSTY_MAPPING
 
@@ -15,7 +15,7 @@ from yfmcp.types import Sector
 from yfmcp.types import TopType
 
 # https://github.com/jlowin/fastmcp/issues/81#issuecomment-2714245145
-mcp = FastMCP("Yahoo Finance MCP Server", log_level="ERROR")
+mcp = FastMCP("Yahoo Finance MCP Server")
 
 
 @mcp.tool()
@@ -199,4 +199,9 @@ def get_price_history(
 
 
 def main() -> None:
-    mcp.run()
+    #mcp.run()
+    mcp.run(transport="http", host="0.0.0.0", port=8000, log_level="debug")
+
+if __name__ == "__main__":
+    #logging.basicConfig(level=logging.DEBUG)
+    main()
